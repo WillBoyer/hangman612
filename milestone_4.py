@@ -5,7 +5,7 @@ class Hangman:
     def __init__(self, word_list, num_lives=5):
         self.word = random.choice(word_list)
         self.word_guessed = ["_"] * len(self.word)
-        self.num_letters = set(self.word)
+        self.num_letters = len(set(self.word))
         self.num_lives = num_lives
         self.word_list = word_list
         self.list_of_guesses = []
@@ -14,13 +14,14 @@ class Hangman:
         guess = guess.lower()
         if guess in self.word:
             print(f"Good guess! {guess} is in the word.")
-            for index, letter in self.word:
+            for letter in self.word:
                 if letter == guess:
+                    index = self.word.index(letter)
                     # Get corresponding blank in word_guessed
                     self.word_guessed[index] = letter
-            num_letters -= 1
+            self.num_letters = self.num_letters - 1
         else:
-            num_lives -= 1
+            self.num_lives = self.num_lives - 1
             print(f"Sorry, {guess} is not in the word. Try again.")
             print(f"You have {self.num_lives} lives left.")
             
